@@ -1,0 +1,49 @@
+@use "../abstracts/" as *;
+
+.section-content {
+  display: grid;
+  grid-template-areas:
+    "image"
+    "text";
+
+  @include mq(medium) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "text image";
+    gap: size(48);
+    width: min(100% - var(--padding), var(--max-width));
+    margin-inline: auto;
+
+    &:before {
+      content: "";
+      height: 1px;
+      width: 50%;
+      background: $aquaduks-yellow;
+      position: absolute;
+      left: 0;
+      transform: translateX(50%) translateY(calc(size(32) * -1));
+    }
+
+    .section-text .section-heading {
+      margin-top: 0;
+    }
+
+    .section-image {
+      border-radius: 1rem;
+    }
+  }
+}
+
+@include mq(medium) {
+  section[data-mod="image"]:nth-of-type(odd) .section-content {
+    grid-template-areas: "image text";
+  }
+}
+
+.section-image {
+  grid-area: image;
+  object-fit: cover;
+}
+
+.section-text {
+  grid-area: text;
+}

@@ -1,0 +1,38 @@
+@use "sass:meta";
+@use "sass:math";
+@use "sass:map";
+
+$breakpoints: (
+  small: 30em,
+  medium: 50em,
+  large: 65em,
+);
+
+@mixin mq($size: medium, $max: false) {
+  @if map.has-key($breakpoints, $size) {
+    $breakpoint: map.get($breakpoints, $size);
+    @if $max {
+      @media screen and (max-width: $breakpoint) {
+        @content;
+      }
+    } @else {
+      @media screen and (min-width: $breakpoint) {
+        @content;
+      }
+    }
+  } @else if meta.type-of($size) == number {
+    @if math.is-unitless($size) {
+      @error 'must specify units';
+    } @else {
+      @if $max {
+        @media screen and (max-width: $size) {
+          @content;
+        }
+      } @else {
+        @media screen and (min-width: $size) {
+          @content;
+        }
+      }
+    }
+  }
+}

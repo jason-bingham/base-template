@@ -1,0 +1,21 @@
+.buoy {
+  animation: bouy 3s linear infinite;
+}
+
+@keyframes bouy {
+  25% {
+    transform: translateY(6px) rotate(-10deg);
+  }
+  // 20% {
+  //   transform: translateY(-4px) rotate(-2deg);
+  // }
+  50% {
+    transform: translateY(-6px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(6px) rotate(10deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}

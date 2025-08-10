@@ -1,0 +1,54 @@
+@use "../abstracts/" as *;
+
+.flex {
+  --flex-column-gap: #{$gap-flex-group};
+  --flex-row-gap: #{$gap-flex-group};
+  --min: 15ch;
+
+  display: flex;
+  column-gap: var(--flex-column-gap);
+  row-gap: var(--flex-row-gap);
+  width: -moz-fit-content;
+  width: fit-content;
+  flex-wrap: wrap;
+
+  &-grid > * {
+    flex: 1 1 var(--min);
+  }
+
+  &.flex-center-x {
+    justify-content: center;
+  }
+
+  &.flex-center-y {
+    align-items: center;
+  }
+  &.flex-center {
+    justify-content: center;
+    align-content: center;
+  }
+  &.flex-between {
+    justify-content: space-between;
+  }
+  &.flex-around {
+    justify-content: space-around;
+  }
+  &.flex-evenly {
+    justify-content: space-evenly;
+  }
+  &.flex-column {
+    flex-direction: column;
+  }
+  &.flex-column-reverse {
+    flex-direction: column-reverse;
+  }
+  &.flex-row {
+    flex-direction: row;
+  }
+  &.flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+  &.flex-fullwidth {
+    width: 100%;
+  }
+}

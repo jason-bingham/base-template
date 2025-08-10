@@ -1,0 +1,66 @@
+@use "sass:map";
+@use "sass:color";
+
+$colors: (
+  neutral: (
+    100: white,
+    800: #5c5c5c,
+    900: #383838,
+    1000: #070707,
+  ),
+  primary: (
+    400: #0c9eff,
+  ),
+  secondary: (
+    400: #ffda45,
+  ),
+  accent: (
+    400: #ff9e0f,
+  ),
+);
+
+$opacities: (
+  1: 0.1,
+  2: 0.2,
+  3: 0.3,
+  4: 0.4,
+  5: 0.5,
+  6: 0.6,
+  7: 0.7,
+  8: 0.8,
+  9: 0.9,
+);
+
+@function clr($color, $shade, $opacity: 1) {
+  @if map.has-key($colors, $color, $shade) {
+    @return rgb(map.get($colors, $color, $shade), $opacity);
+  } @else {
+    @error '$colors does not contain that color.';
+  }
+}
+
+@each $color, $shade-map in $colors {
+  @each $shade, $value in $shade-map {
+    .clr-#{$color}-#{$shade} {
+      color: $value;
+    }
+    .bg-#{$color}-#{$shade} {
+      background-color: $value;
+    }
+    @each $opacity, $opacity-value in $opacities {
+      .clr-#{$color}-#{$shade}-#{$opacity} {
+        color: rgba($value, $opacity-value);
+      }
+      .bg-#{$color}-#{$shade}-#{$opacity} {
+        background-color: rgba($value, $opacity-value);
+      }
+    }
+  }
+}
+
+$aquaduks-blue: clr(primary, 400);
+$aquaduks-yellow: clr(secondary, 400);
+$aquaduks-orange: clr(accent, 400);
+
+$color-base: clr(neutral, 900);
+$background-base: clr(neutral, 100);

@@ -1,0 +1,104 @@
+@use "sass:map";
+@use "../abstracts/colors" as *;
+@use "../abstracts/sizes" as *;
+
+$system-serif:
+  "Apple Garamond", "Baskerville", "Times New Roman", "Droid Serif", "Times",
+  "Source Serif Pro", serif;
+$system-sans:
+  system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$system-mono:
+  "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono",
+  "Source Code Pro", monospace;
+
+$ff-sans: "Arimo", $system-sans;
+$ff-serif: "Abril Fatface", $system-serif;
+$ff-mono: $system-mono;
+
+$ff-base: $ff-sans;
+$ff-accent: $ff-serif;
+
+$ff-headings: $ff-serif;
+$ff-code: $ff-mono;
+
+/* @link https://utopia.fyi/type/calculator?c=320,16,1.25,1240,20,1.333,6,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l|s-xl&g=s,l,xl,12 */
+
+:root {
+  --step--2: clamp(0.64rem, 0.6179rem + 0.1104vw, 0.7035rem);
+  --step--1: clamp(0.8rem, 0.7521rem + 0.2395vw, 0.9377rem);
+  --step-0: clamp(1rem, 0.913rem + 0.4348vw, 1.25rem);
+  --step-1: clamp(1.25rem, 1.1052rem + 0.7239vw, 1.6663rem);
+  --step-2: clamp(1.5625rem, 1.3334rem + 1.1454vw, 2.2211rem);
+  --step-3: clamp(1.9531rem, 1.6026rem + 1.7524vw, 2.9607rem);
+  --step-4: clamp(2.4414rem, 1.9178rem + 2.6178vw, 3.9467rem);
+  --step-5: clamp(3.0518rem, 2.2834rem + 3.842vw, 5.2609rem);
+  --step-6: clamp(3.8147rem, 2.7023rem + 5.5619vw, 7.0128rem);
+}
+
+$font-sizes: (
+  100: var(--step--2),
+  200: var(--step--1),
+  300: var(--step-0),
+  400: var(--step-1),
+  500: var(--step-2),
+  600: var(--step-3),
+  700: var(--step-4),
+  800: var(--step-5),
+  900: var(--step-6),
+);
+
+$fw-thin: 200;
+$fw-regular: 400;
+$fw-bold: 700;
+$fw-black: 900;
+
+@function fs($font-size) {
+  @if map.has-key($font-sizes, $font-size) {
+    @return map.get($font-sizes, $font-size);
+  } @else {
+    @error '$font-sizes does not contain that size.';
+  }
+}
+
+@each $size-name, $size-value in $font-sizes {
+  .fs-#{$size-name} {
+    font-size: $size-value;
+
+    @if $size-name > 600 {
+      line-height: 1.1;
+    }
+  }
+}
+
+.ff-sans {
+  font-family: $ff-sans;
+}
+
+.ff-serif {
+  font-family: $ff-serif;
+}
+
+.ff-mono {
+  font-family: $ff-mono;
+}
+
+.fw-regular {
+  font-weight: $fw-regular;
+}
+
+.fw-bold {
+  font-weight: $fw-bold;
+}
+
+.section-heading {
+  font-size: fs(600);
+  color: clr(neutral, 900);
+  font-family: $ff-headings;
+  font-weight: $fw-bold;
+  line-height: 1.1;
+  padding-block-end: size(32);
+  text-align: center;
+}
+
+$fs-base: size(16);

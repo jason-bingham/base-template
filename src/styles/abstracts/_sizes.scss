@@ -1,0 +1,166 @@
+@use "sass:map";
+
+/* @link https://utopia.fyi/space/calculator?c=320,16,1.25,1240,20,1.333,6,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l|s-xl&g=s,l,xl,12 */
+
+:root {
+  --space-3xs: clamp(0.25rem, 0.2283rem + 0.1087vw, 0.3125rem);
+  --space-2xs: clamp(0.5rem, 0.4565rem + 0.2174vw, 0.625rem);
+  --space-xs: clamp(0.75rem, 0.6848rem + 0.3261vw, 0.9375rem);
+  --space-s: clamp(1rem, 0.913rem + 0.4348vw, 1.25rem);
+  --space-s2: clamp(1.25rem, 1.1413rem + 0.5435vw, 1.5625rem);
+  --space-m: clamp(1.5rem, 1.3696rem + 0.6522vw, 1.875rem);
+  --space-l: clamp(2rem, 1.8261rem + 0.8696vw, 2.5rem);
+  --space-xl: clamp(3rem, 2.7391rem + 1.3043vw, 3.75rem);
+  --space-2xl: clamp(4rem, 3.6522rem + 1.7391vw, 5rem);
+  --space-3xl: clamp(5rem, 4.5652rem + 2.1739vw, 6.25rem);
+  --space-4xl: clamp(6rem, 5.4783rem + 2.6087vw, 7.5rem);
+
+  /* One-up pairs */
+  --space-3xs-2xs: clamp(0.25rem, 0.1196rem + 0.6522vw, 0.625rem);
+  --space-2xs-xs: clamp(0.5rem, 0.3478rem + 0.7609vw, 0.9375rem);
+  --space-xs-s: clamp(0.75rem, 0.5761rem + 0.8696vw, 1.25rem);
+  --space-s-m: clamp(1rem, 0.6957rem + 1.5217vw, 1.875rem);
+  --space-m-l: clamp(1.5rem, 1.1522rem + 1.7391vw, 2.5rem);
+  --space-l-xl: clamp(2rem, 1.3913rem + 3.0435vw, 3.75rem);
+  --space-xl-2xl: clamp(3rem, 2.3043rem + 3.4783vw, 5rem);
+  --space-2xl-3xl: clamp(4rem, 3.2174rem + 3.913vw, 6.25rem);
+  --space-3xl-4xl: clamp(5rem, 4.1304rem + 4.3478vw, 7.5rem);
+
+  /* Custom pairs */
+  --space-xs-l: clamp(0.75rem, 0.1413rem + 3.0435vw, 2.5rem);
+  --space-s-s2: clamp(1rem, 0.8043rem + 0.9783vw, 1.5625rem);
+  --space-s-l: clamp(1rem, 0.4783rem + 2.6087vw, 2.5rem);
+  --space-s-xl: clamp(1rem, 0.0435rem + 4.7826vw, 3.75rem);
+  --space-m-xl: clamp(1.5rem, 0.7174rem + 3.913vw, 3.75rem);
+  --space-s-4xl: clamp(1rem, -1.2609rem + 11.3043vw, 7.5rem);
+}
+
+$sizes: (
+  4: var(--space-3xs),
+  // 0.25rem
+  "4-8": var(--space-3xs-2xs),
+  // 0.25rem to 0.5rem
+  8: var(--space-2xs),
+  // 0.5rem
+  "8-12": var(--space-2xs-xs),
+  // 0.5rem to 0.75rem
+  12: var(--space-xs),
+  // 0.75rem
+  "12-16": var(--space-xs-s),
+  // 0.75rem to 1rem
+  "12-40": var(--space-xs-l),
+  // 0.75rem to 2.5rem
+  16: var(--space-s),
+  // 1rem
+  "16-20": var(--space-s-s2),
+  // 1rem to 1.5625rem
+  "16-24": var(--space-s-m),
+  // 1rem to 1.875rem
+  "16-32": var(--space-s-l),
+  // 1rem to 2rem
+  "16-48": var(--space-s-xl),
+  // 1rem to 3rem
+  "16-60": var(--space-s-4xl),
+  // 1rem to 6rem
+  20: var(--space-s2),
+  24: var(--space-m),
+  // 1.5rem
+  "24-32": var(--space-m-l),
+  // 1.5rem to 2rem
+  "24-48": var(--space-m-xl),
+  // 1.5rem to 3.75rem
+  32: var(--space-l),
+  // 2rem
+  "32-48": var(--space-l-xl),
+  // 2rem to 3rem
+  48: var(--space-xl),
+  // 3rem
+  "48-64": var(--space-xl-2xl),
+  // 3rem to 4rem
+  64: var(--space-2xl),
+  // 4rem
+  "64-80": var(--space-2xl-3xl),
+  // 4rem to 6rem
+  80: var(--space-3xl),
+  // 5rem
+  "80-96": var(--space-3xl-4xl),
+  // 5rem to 6rem
+  96: var(--space-4xl), // 6rem
+);
+
+@function size($size) {
+  @if map.has-key($sizes, $size) {
+    @return map.get($sizes, $size);
+  } @else {
+    @error '$sizes does not contain that size.';
+  }
+}
+
+$padding-card-body: clamp(2rem, 3vw, 5rem);
+
+$grid-gap: size(24);
+$gap-flex-group: size(16);
+
+// SIZE UTILITY CLASSES
+
+@each $size-name, $size-value in $sizes {
+  .margin {
+    &-#{$size-name} {
+      margin: $size-value;
+    }
+
+    &-block-start-#{$size-name} {
+      margin-block-start: $size-value;
+    }
+
+    &-block-end-#{$size-name} {
+      margin-block-end: $size-value;
+    }
+
+    &-block-#{$size-name} {
+      margin-block: $size-value;
+    }
+
+    &-inline-start-#{$size-name} {
+      margin-inline-start: $size-value;
+    }
+
+    &-inline-end-#{$size-name} {
+      margin-inline-end: $size-value;
+    }
+
+    &-inline-#{$size-name} {
+      margin-inline: $size-value;
+    }
+  }
+
+  .padding {
+    &-#{$size-name} {
+      padding: $size-value;
+    }
+
+    &-block-start-#{$size-name} {
+      padding-block-start: $size-value;
+    }
+
+    &-block-end-#{$size-name} {
+      padding-block-end: $size-value;
+    }
+
+    &-block-#{$size-name} {
+      padding-block: $size-value;
+    }
+
+    &-inline-start-#{$size-name} {
+      padding-inline-start: $size-value;
+    }
+
+    &-inline-end-#{$size-name} {
+      padding-inline-end: $size-value;
+    }
+
+    &-inline-#{$size-name} {
+      padding-inline: $size-value;
+    }
+  }
+}

@@ -42,7 +42,7 @@ Include this polyfill in the Head:
   }
 
   .ham {
-    fill: $aquaduks-blue;
+    fill: $d-color;
     transition: 600ms ease;
     width: clamp(35px, 8vw, 50px);
   }
@@ -54,7 +54,7 @@ Include this polyfill in the Head:
     position: absolute;
     border-radius: 0 0 size(16) size(16);
     background: rgb(clr(neutral, 100), 0.6);
-    box-shadow: 1px 3px 4px rgb($aquaduks-blue, 0.5);
+    box-shadow: 1px 3px 4px rgb($d-color, 0.5);
     gap: 2px;
 
     position-anchor: --primary-nav;
@@ -104,7 +104,7 @@ Include this polyfill in the Head:
         content: "";
         width: 100%;
         height: 100%;
-        background: $aquaduks-blue;
+        background: $d-color;
         position: absolute;
         inset: 0;
         top: 100%;
@@ -165,23 +165,23 @@ Include this polyfill in the Head:
       fill 400ms ease 100ms;
   }
 
-  $open-color: $aquaduks-orange;
+  $open-color: $d-background;
 
   #ham1[aria-expanded="true"] .top {
     y: 45%;
     rotate: 45deg;
-    fill: $aquaduks-yellow;
+    fill: $d-color;
   }
 
   #ham1[aria-expanded="true"] .middle {
     opacity: 0;
-    fill: $aquaduks-yellow;
+    fill: $d-color;
   }
 
   #ham1[aria-expanded="true"] .bottom {
     y: 45%;
     rotate: -45deg;
-    fill: $aquaduks-yellow;
+    fill: $d-color;
   }
 </style>
 

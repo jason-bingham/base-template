@@ -1,0 +1,207 @@
+---
+/*
+Include this polyfill in the Head:
+<script type="module">
+  if (!("anchorName" in document.documentElement.style)) {
+    import("https://unpkg.com/@oddbird/css-anchor-positioning");
+  }
+</script>
+*/
+---
+
+<button
+  popovertarget="primary-nav"
+  id="ham1"
+  aria-controls="primary-nav"
+  aria-expanded="false">
+  <svg class="ham" viewBox="0 0 100 100">
+    <rect class="line top" width="80" height="10" x="10" y="25" rx="5"> </rect>
+    <rect class="line middle" width="80" height="10" x="10" y="45" rx="5">
+    </rect>
+    <rect class="line bottom" width="80" height="10" x="10" y="65" rx="5">
+    </rect>
+  </svg>
+</button>
+
+<ul popover id="primary-nav" class="primary-nav">
+  <li><a href="/about">About</a></li>
+  <li><a href="/programs">Programs</a></li>
+  <li><a href="/blog">Blog</a></li>
+  <li><a href="/faq">FAQ</a></li>
+</ul>
+
+<style lang="scss">
+  @use "../styles/abstracts/" as *;
+
+  button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    anchor-name: --primary-nav;
+  }
+
+  .ham {
+    fill: $aquaduks-blue;
+    transition: 600ms ease;
+    width: clamp(35px, 8vw, 50px);
+  }
+
+  .primary-nav {
+    border: none;
+    margin: 0;
+    inset: auto;
+    position: absolute;
+    border-radius: 0 0 size(16) size(16);
+    background: rgb(clr(neutral, 100), 0.6);
+    box-shadow: 1px 3px 4px rgb($aquaduks-blue, 0.5);
+    gap: 2px;
+
+    position-anchor: --primary-nav;
+    top: anchor(bottom);
+    justify-self: anchor-center;
+
+    opacity: 0;
+
+    transition:
+      display 500ms,
+      opacity 500ms;
+    transition-behavior: allow-discrete;
+
+    // opacity: 0;
+
+    // VERY STRANGE BEHAVIOR: When closed the popover shifts 40px to the right unless I include `margin-inline: -40px`
+    // padding-inline-start: 0; // <- does nothing
+    // display: grid; // <- for testing
+    margin-inline: -40px;
+
+    &:popover-open {
+      display: grid;
+      opacity: 1;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    a {
+      position: relative;
+      z-index: 0;
+      color: clr(neutral, 1000);
+    }
+
+    li {
+      background: linear-gradient(
+        to top,
+        rgb(clr(neutral, 100), 0.3),
+        rgb(clr(neutral, 100), 0.8) 30%
+      );
+      padding: size(8) size(16);
+      overflow: hidden;
+      position: relative;
+
+      &:before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        background: $aquaduks-blue;
+        position: absolute;
+        inset: 0;
+        top: 100%;
+        transition: top 500ms cubic-bezier(0.12, 1.28, 0.83, -0.25);
+        mix-blend-mode: screen;
+        z-index: 10;
+        pointer-events: none;
+      }
+
+      &:hover,
+      &:focus {
+        &:before {
+          top: 0;
+        }
+      }
+    }
+  }
+
+  @include mq() {
+    button {
+      display: none;
+    }
+
+    .primary-nav {
+      display: grid;
+      grid-auto-flow: column;
+
+      position: relative;
+      margin: 0;
+      margin-inline-start: auto;
+      opacity: 1;
+      box-shadow: none;
+      border-radius: 0;
+
+      &,
+      li {
+        background: none;
+      }
+    }
+  }
+
+  /* Button 1 */
+
+  #ham1 .line {
+    transition:
+      rotate 400ms ease,
+      y 100ms ease 400ms,
+      opacity 0s 400ms,
+      fill 400ms ease;
+    transform-origin: center;
+  }
+
+  #ham1[aria-expanded="true"] .line {
+    transition:
+      y 100ms ease,
+      rotate 400ms ease 100ms,
+      opacity 0s 100ms,
+      fill 400ms ease 100ms;
+  }
+
+  $open-color: $aquaduks-orange;
+
+  #ham1[aria-expanded="true"] .top {
+    y: 45%;
+    rotate: 45deg;
+    fill: $aquaduks-yellow;
+  }
+
+  #ham1[aria-expanded="true"] .middle {
+    opacity: 0;
+    fill: $aquaduks-yellow;
+  }
+
+  #ham1[aria-expanded="true"] .bottom {
+    y: 45%;
+    rotate: -45deg;
+    fill: $aquaduks-yellow;
+  }
+</style>
+
+<script>
+  const popoverMenu = document.getElementById("primary-nav");
+  const popoverButton = document.getElementById("ham1");
+
+  window.addEventListener("scroll", function () {
+    const isOpen = popoverButton.getAttribute("aria-expanded");
+    if (isOpen == "true") {
+      popoverMenu?.togglePopover();
+    }
+  });
+
+  popoverMenu.addEventListener("beforetoggle", () => {
+    const isOpen = popoverButton.getAttribute("aria-expanded");
+    if (isOpen === "false") {
+      popoverButton.setAttribute("aria-expanded", "true");
+    } else {
+      popoverButton.setAttribute("aria-expanded", "false");
+    }
+  });
+</script>

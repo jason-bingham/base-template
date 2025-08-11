@@ -2,18 +2,16 @@
 @use "../abstracts/colors" as *;
 @use "../abstracts/sizes" as *;
 
-$system-serif:
-  "Apple Garamond", "Baskerville", "Times New Roman", "Droid Serif", "Times",
-  "Source Serif Pro", serif;
-$system-sans:
-  system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+$system-serif: "Apple Garamond", "Baskerville", "Times New Roman", "Droid Serif",
+  "Times", "Source Serif Pro", serif;
+$system-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-$system-mono:
-  "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono",
+$system-mono: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono",
   "Source Code Pro", monospace;
 
-$ff-sans: "Arimo", $system-sans;
-$ff-serif: "Abril Fatface", $system-serif;
+// Insert brand fonts here:
+$ff-sans: $system-sans;
+$ff-serif: $system-serif;
 $ff-mono: $system-mono;
 
 $ff-base: $ff-sans;

@@ -1,0 +1,64 @@
+---
+import Nav from "./Nav.astro";
+---
+
+<header class="frosted-glass">
+  <div class="frosted-glass-backdrop"></div>
+  <div class="frosted-glass-backdrop-edge"></div>
+  <div class="container" data-width="wide">
+    <div class="flex flex-between flex-fullwidth flex-center-y">
+      <a href="/">
+        <img
+          class="logo | shrink-on-scroll"
+          src="/logos/SandlotStudio_Logo.svg"
+          alt="Logo"
+        />
+      </a>
+      <Nav />
+    </div>
+  </div>
+</header>
+
+<style lang="scss">
+  @use "../styles/abstracts/" as *;
+
+  $padding-header-inline: size(8);
+  $padding-header-block: size(8);
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding-inline: $padding-header-inline;
+    padding-block: $padding-header-block;
+    padding: size(8);
+    animation: shrink-header-padding linear forwards;
+    animation-timeline: scroll(block root);
+    animation-range-end: 40vh;
+  }
+
+  .logo {
+    width: clamp(120px, 27vw, 270px);
+    animation: shrink-logo linear forwards;
+    animation-timeline: scroll(block root);
+    animation-range-end: 40vh;
+  }
+
+  @keyframes shrink-logo {
+    100% {
+      width: clamp(120px, 25vw, 170px);
+    }
+  }
+  @keyframes shrink-header-padding {
+    100% {
+      padding-block: size(8);
+    }
+  }
+
+  .container {
+    @include mq(small, max) {
+      margin-inline: 0;
+      width: 100%;
+    }
+  }
+</style>
